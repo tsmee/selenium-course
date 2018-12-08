@@ -15,7 +15,7 @@ def setup(request):
 @pytest.mark.usefixtures("setup")
 class TestExample:
 
-    def test_title(self):
+    def test_login(self):
         self.driver.find_element_by_name('username').send_keys('admin')
         self.driver.find_element_by_name('password').send_keys('admin')
         self.driver.find_element_by_name('login').click()
