@@ -8,8 +8,8 @@ def setup(request):
     request.cls.driver = driver
     driver.get("http://localhost/litecart/")
     driver.maximize_window()
-    # yield driver
-    # driver.close()
+    yield driver
+    driver.close()
 
 
 @pytest.mark.usefixtures("setup")
