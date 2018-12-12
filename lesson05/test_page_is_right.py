@@ -38,7 +38,6 @@ class TestPage:
         main_regular_price_color = m_reg_price.value_of_css_property(
             'color')
         main_regular_price_color = rgb_to_list(main_regular_price_color)
-        # преобразуем ответ о цвете в список значений r, g, b. выглядит надежно!
         main_campaign_price_color = m_camp_price.value_of_css_property(
             'color')
         main_campaign_price_color = rgb_to_list(main_campaign_price_color)
