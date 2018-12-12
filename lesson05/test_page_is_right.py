@@ -1,18 +1,29 @@
 import pytest
 from selenium import webdriver
+import re
+import time
 
 @pytest.fixture(scope="class")
 def setup(request):
-    print("initiating chrome driver")
-    driver = webdriver.Firefox()
+    print("initiating edge driver")
+    driver = webdriver.Edge()
     request.cls.driver = driver
     driver.get("http://localhost/litecart/")
     driver.maximize_window()
     yield driver
     driver.close()
 
+def rgb_to_list(color):
+    regex = r"\((.*?)\)"
+    m = re.search(regex, color)
+    colors = m.group(1)
+    return colors.replace(" ", "").split(',')
+
 @pytest.mark.usefixtures("setup")
 class TestPage:
+
+
+
     def test_page(self):
         #сначала находим элемент из раздела Campaigns и получаем его свойства
         mains = self.driver.find_elements_by_css_selector('div#box-campaigns li.product')
@@ -27,11 +38,11 @@ class TestPage:
         main_campaign_price_tag = m_camp_price.tag_name
         main_regular_price_color = m_reg_price.value_of_css_property(
             'color')
+        main_regular_price_color = rgb_to_list(main_regular_price_color)
         # преобразуем ответ о цвете в список значений r, g, b. выглядит надежно!
-        main_regular_price_color = main_regular_price_color[4:-1].replace(" ", "").split(',')
         main_campaign_price_color = m_camp_price.value_of_css_property(
             'color')
-        main_campaign_price_color = main_campaign_price_color[4:-1].replace(" ", "").split(',')
+        main_campaign_price_color = rgb_to_list(main_campaign_price_color)
         main_regular_price_size = m_reg_price.value_of_css_property('font-size')
         main_regular_price_size = float(main_regular_price_size[:-2])
         main_campaign_price_size = m_camp_price.value_of_css_property(
@@ -39,7 +50,8 @@ class TestPage:
         main_campaign_price_size =  float(main_campaign_price_size[:-2])
         #переходим на страницу товара
         m.find_element_by_css_selector('a').click()
-        p = self.driver.find_element_by_css_selector('div#box-product')            #карточка товара. относительно нее будем строить локаторы
+        time.sleep(3)                                                               #без ожидания не работало под Edge
+        p = self.driver.find_element_by_css_selector('div#box-product')             #карточка товара. относительно нее будем строить локаторы
         product_text = p.find_element_by_css_selector('h1').text
         p_reg_price = p.find_element_by_css_selector('.regular-price')
         p_camp_price = p.find_element_by_css_selector('.campaign-price')
@@ -49,10 +61,10 @@ class TestPage:
         product_campaign_price_tag = p_camp_price.tag_name
         product_regular_price_color = p_reg_price.value_of_css_property(
             'color')
-        product_regular_price_color = product_regular_price_color[4:-1].replace(" ", "").split(',')
+        product_regular_price_color = rgb_to_list(product_regular_price_color)
         product_campaign_price_color = p_camp_price.value_of_css_property(
             'color')
-        product_campaign_price_color = product_campaign_price_color[4:-1].replace(" ", "").split(',')
+        product_campaign_price_color = rgb_to_list(product_campaign_price_color)
         product_regular_price_size = p_reg_price.value_of_css_property('font-size')
         product_regular_price_size = float(product_regular_price_size[:-2])
         product_campaign_price_size = p_camp_price.value_of_css_property(
