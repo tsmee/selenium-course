@@ -13,6 +13,7 @@ def setup(request):
     yield driver
     driver.close()
 
+# приводим к единому виду ответы браузеров о цвете элемента
 def rgb_to_list(color):
     regex = r"\((.*?)\)"
     m = re.search(regex, color)
@@ -21,8 +22,6 @@ def rgb_to_list(color):
 
 @pytest.mark.usefixtures("setup")
 class TestPage:
-
-
 
     def test_page(self):
         #сначала находим элемент из раздела Campaigns и получаем его свойства
@@ -48,6 +47,7 @@ class TestPage:
         main_campaign_price_size = m_camp_price.value_of_css_property(
             'font-size')
         main_campaign_price_size =  float(main_campaign_price_size[:-2])
+
         #переходим на страницу товара
         m.find_element_by_css_selector('a').click()
         time.sleep(3)                                                               #без ожидания не работало под Edge
