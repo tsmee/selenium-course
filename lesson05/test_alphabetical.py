@@ -3,13 +3,14 @@ from selenium import webdriver
 
 @pytest.fixture(scope="class")
 def setup(request):
-    print("initiating chrome driver")
+    print("initiating firefox driver")
     driver = webdriver.Firefox()
     request.cls.driver = driver
     driver.get("http://localhost/litecart/admin/?app=countries&doc=countries")
     driver.maximize_window()
     yield driver
     driver.close()
+
 
 
 @pytest.mark.usefixtures("setup")

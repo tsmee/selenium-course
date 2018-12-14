@@ -35,5 +35,5 @@ class TestGeozones:
             assert sorted(geozones_unsorted) == geozones_unsorted
             current_country = self.driver.find_element_by_xpath("//input[@name='name']").get_attribute('value')
             print('Country: '+ current_country + '. Zones are in correct order.')
-
+`
 
