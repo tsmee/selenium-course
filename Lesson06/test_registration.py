@@ -32,8 +32,7 @@ class TestRegistration:
         self.driver.find_element_by_name('address1').send_keys('Elm street 27')
         self.driver.find_element_by_name('city').send_keys('Raccoon City')
         country = self.driver.find_element_by_name('country_code')
-        self.driver.execute_script("arguments[0].selectedIndex = 224; arguments[0].dispatchEvent(new Event('change'))",
-                                   country)
+        self.driver.execute_script("arguments[0].selectedIndex = 224; arguments[0].dispatchEvent(new Event('change'))", country)
         time.sleep(1)
         hiddenselect = self.driver.find_element_by_xpath(('//select[@name="zone_code"]'))
         self.driver.execute_script("arguments[0].selectedIndex = 22; arguments[0].dispatchEvent(new Event('change'))", hiddenselect)
