@@ -31,7 +31,7 @@ class TestProductCart:
             self.driver.find_element_by_css_selector('div#logotype-wrapper a').click()
         assert int(self.driver.find_element_by_css_selector('span.quantity').text) == 3
 
-    def test_delete_products(self):ё
+    def test_delete_products(self):
         self.driver.find_element_by_link_text('Checkout »').click()
         while self.driver.find_elements_by_css_selector('td.item'):
             element = self.driver.find_element_by_css_selector('td.item')
