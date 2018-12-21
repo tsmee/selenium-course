@@ -22,14 +22,12 @@ class TestProductCart:
         while int(self.driver.find_element_by_css_selector('span.quantity').text) < 3:
             self.driver.find_element_by_css_selector('li.product a.link').click()
             quantity = int(self.driver.find_element_by_css_selector('span.quantity').text)
-            print(quantity)
             size = self.driver.find_elements_by_name("options[Size]")
             if size:
                 Select(size[0]).select_by_index(2)
             self.driver.find_element_by_name('add_cart_product').click()
             wait = WebDriverWait(self.driver, 10)  # seconds
             wait.until(EC.text_to_be_present_in_element((By.XPATH, "//span[@class='quantity']"), str(quantity + 1)))
-            print("changed successfully")
             self.driver.find_element_by_css_selector('div#logotype-wrapper a').click()
         assert int(self.driver.find_element_by_css_selector('span.quantity').text) == 3
 
